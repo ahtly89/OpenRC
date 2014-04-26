@@ -32,8 +32,8 @@ byte roll_value_T;
 byte pitch_value_T;
 
 
-//#define button_pins_T {12,13,14,15,16,17,18,19} 
-  #define button_pins_T {34,35,36,37,38,39,40,41}
+//#define button_pins_T {14,15,16,17,18,19,20,21} 
+#define button_pins_T {34,35,36,37,38,39,40,41}
 
 int buttons_T[] = button_pins_T;
 byte buttons_value_T;
