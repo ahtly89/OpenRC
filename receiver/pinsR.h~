@@ -7,12 +7,12 @@
 #define MESSAGE_LENGTH_R 5
 byte message_R[MESSAGE_LENGTH_R];
 
-#define throttle_pin_R 14 //22
-#define yaw_pin_R      15 //23
-#define roll_pin_R     16 //24
-#define pitch_pin_R    17 //25
-#define aux1_pin_R     18 //26
-#define aux2_pin_R     19 //27
+#define throttle_pin_R 19 //22
+#define yaw_pin_R      18 //23
+#define roll_pin_R     17 //24
+#define pitch_pin_R    16 //25
+#define aux1_pin_R     15 //26
+#define aux2_pin_R     14 //27
 //#define aux3_pin_R     28
 //#define aux4_pin_R     29
 //#define aux5_pin_R     30
