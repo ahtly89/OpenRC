@@ -178,7 +178,7 @@ void loop()
   //-- This part is made for simulate the data transmission
   //-- from the transmitter to the receiver.
   
-  //-- Trigger the button A6 will simulate to stop recieveing data
+  //-- Trigger the button A5 will simulate to stop recieveing data
   if(digitalRead(A5) == HIGH)
   {
     for(i = 0 ;i < sizeof(message_T); i++)
