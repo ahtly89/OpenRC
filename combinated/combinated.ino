@@ -61,9 +61,6 @@
  
 #include <Servo.h>
 
-unsigned long previous_data_recieved_millis = millis();
-
-
 void setup()
 {
   /* ******************
@@ -131,6 +128,8 @@ void setup()
     digitalWrite(A5,parpadeo);delay(25);
   }
   digitalWrite(A5,LOW);
+  pinMode(A5,INPUT);
+  digitalWrite(A5,HIGH); //-- Let this part to simulate the stop from receveing data
   
   delay(1000); //Give a second to start right
   
@@ -179,9 +178,17 @@ void loop()
   //-- This part is made for simulate the data transmission
   //-- from the transmitter to the receiver.
   
-  for(i = 0 ;i < sizeof(message_T); i++)
+  //-- Trigger the button A6 will simulate to stop recieveing data
+  if(digitalRead(A5) == HIGH)
   {
-    message_R[i] = message_T[i];
+    for(i = 0 ;i < sizeof(message_T); i++)
+    {
+      message_R[i] = message_T[i];
+    }
+    previous_data_recieved_millis = millis(); //Save when I had recieve last data
+  }else
+  {
+    //Do nothing
   }
 
 
@@ -189,21 +196,14 @@ void loop()
   ** RECEIVER LOOP
   ** ************* */
 
-  while(!Mirf.dataReady()) //Espero a recibir un dato
-    {
-      if( (millis()-previous_data_recieved_millis) > TIMEOUT )
-      {
-        for (i = 0; i < sizeof(message_R); i++)
-        {
-          message_R[i] = SAFE_VALUES[i] ;
-        }
-        output_data();
-      }
-    }
+//  while(!Mirf.dataReady()) //Espero a recibir un dato
+//    {
+      timeout_check();
+//    }
 
 
 //  Mirf.getData(message_R);
-  previous_data_recieved_millis = millis(); //Save when I had recieve last data
+//  previous_data_recieved_millis = millis(); //Save when I had recieve last data
 
   output_data();
   
