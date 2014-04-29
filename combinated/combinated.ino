@@ -57,10 +57,11 @@
 #include "pinsR.h"
 #include "output_dataR.h"
 #include "config_outputsR.h"
+#include "timeoutR.h"
  
 #include <Servo.h>
 
-unsigned long previous_millis = millis();
+unsigned long previous_data_recieved_millis = millis();
 
 
 void setup()
@@ -188,29 +189,22 @@ void loop()
   ** RECEIVER LOOP
   ** ************* */
 
-//  while(!Mirf.dataReady()) //Espero a recibir un dato
-//    {
-//      if( (millis()-previous_millis) > 500 )
-//      {
-//        aux_string = {0,0,0,0,0} ;
-//        Serial.print("He recibido --> ");
-//        int i;
-//        for(i = 0 ;i < sizeof(aux_string)-1; i++)
-//        {
-//          Serial.print(aux_string[i]);
-//          Serial.print("\t");
-//        }
-//          Serial.print(aux_string[i],BIN);
-//          Serial.print("\t");
-//        Serial.print("time --> ");
-//        Serial.print(millis());
-//        Serial.println();
-//      }
-//    }
+  while(!Mirf.dataReady()) //Espero a recibir un dato
+    {
+      if( (millis()-previous_data_recieved_millis) > TIMEOUT )
+      {
+        for (i = 0; i < sizeof(message_R); i++)
+        {
+          message_R[i] = SAFE_VALUES[i] ;
+        }
+        output_data();
+      }
+    }
 
 
 //  Mirf.getData(message_R);
-  
+  previous_data_recieved_millis = millis(); //Save when I had recieve last data
+
   output_data();
   
 }
